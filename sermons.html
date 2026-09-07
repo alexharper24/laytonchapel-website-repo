@@ -15,12 +15,12 @@
 <meta property="og:url" content="https://www.laytonchapel.org/sermons.html">
 <meta property="og:image" content="https://www.laytonchapel.org/img/og-image.jpg">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="favicon.ico?v=1" sizes="any">
-<link rel="apple-touch-icon" href="img/apple-touch-icon.png?v=1">
+<link rel="icon" href="favicon.ico?v=2" sizes="any">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png?v=2">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap">
-<link rel="stylesheet" href="style.css?v=3">
+<link rel="stylesheet" href="style.css?v=5">
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -28,7 +28,7 @@
 <header class="site-header">
   <div class="wrap header-inner">
     <a class="brand" href="index.html">
-      <img class="brand-mark" src="img/logo-mark.png?v=1" alt="" width="44" height="44">
+      <img class="brand-mark" src="img/logo-mark.png?v=2" alt="" width="46" height="46">
       <span class="brand-text"><strong>Layton Chapel</strong><span>Baptist Church</span></span>
     </a>
     <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Menu">
@@ -42,7 +42,8 @@
         <li><a href="sermons.html" aria-current="page">Sermons</a></li>
         <li><a href="ministries.html">Ministries</a></li>
         <li><a href="index.html#visit">Visit</a></li>
-        <li class="nav-give"><a class="btn btn-give" href="giving.html">Give</a></li>
+        <li class="nav-cta"><a class="btn btn-outline btn-sm watch-online" href="https://www.youtube.com/@laytonchapelbaptistchurch">Watch Online</a></li>
+        <li class="nav-cta"><a class="btn btn-give btn-sm" href="giving.html">Give</a></li>
       </ul>
     </nav>
   </div>
@@ -58,51 +59,34 @@
     </div>
   </div>
 
+  <!-- Live Now. Hidden unless a service is actually streaming, so the page
+       never shows a dead player. main.js reveals it. -->
+  <section class="slib-live" id="sermonLive" hidden>
+    <div class="wrap wrap-doc">
+      <h2><span class="live-dot live-label" aria-hidden="true"></span>Live Now</h2>
+      <div class="slib-live-player" id="sermonLivePlayer"></div>
+    </div>
+  </section>
+
   <section class="section">
-    <div class="wrap">
-      <div class="section-head narrow">
-        <h2>The latest service</h2>
-        <p>This player always opens the most recent service from our YouTube channel. During a live service, it plays the stream.</p>
+    <div class="wrap wrap-doc">
+      <div class="section-head section-head-center">
+        <h2>Recent services</h2>
+        <p>The twelve most recent Sunday services. Press any one to play it here.</p>
       </div>
-      <div class="video-card">
-        <div class="video-frame" data-src="https://www.youtube-nocookie.com/embed/videoseries?list=UU5XmDjyOSrexPMpJgQICKUw">
-          <button class="video-poster" type="button" data-title="Latest service from Layton Chapel Baptist Church">
-            <img src="img/sermon-poster.jpg" alt="" width="1280" height="720" loading="lazy">
-            <span class="play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>Play the latest service</span>
-          </button>
-        </div>
-        <div class="video-note">
-          <p>Loads from YouTube when you press play, so nothing tracks you before then.</p>
-        </div>
+      <div class="slib-grid" id="sermonGrid">
+        <p class="slib-note">Loading recent services&hellip;</p>
       </div>
-      <p class="mt-2"><a class="btn btn-outline" href="https://www.youtube.com/@laytonchapelbaptistchurch/streams">Every past service on YouTube</a></p>
+      <div class="slib-actions">
+        <a class="btn btn-primary" href="https://www.youtube.com/@laytonchapelbaptistchurch/streams" target="_blank" rel="noopener">All past services on YouTube</a>
+        <a class="btn btn-outline" href="https://www.youtube.com/@laytonchapelbaptistchurch" target="_blank" rel="noopener">Our YouTube channel</a>
+      </div>
     </div>
   </section>
 
   <section class="section section-offset">
-    <div class="wrap">
-      <div class="section-head narrow">
-        <p class="eyebrow">Watch live</p>
-        <h2>Join us on Sunday morning</h2>
-        <p>The morning service begins at 11:00 AM Eastern and the stream starts a few minutes before. If nothing is playing, the service has not started yet.</p>
-      </div>
-      <div class="video-card">
-        <div class="video-frame" data-src="https://www.youtube-nocookie.com/embed/live_stream?channel=UC5XmDjyOSrexPMpJgQICKUw">
-          <button class="video-poster" type="button" data-title="Live stream from Layton Chapel Baptist Church">
-            <img src="img/sermon-poster.jpg" alt="" width="1280" height="720" loading="lazy">
-            <span class="play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>Open the live stream</span>
-          </button>
-        </div>
-        <div class="video-note">
-          <p>Services also stream to <a href="https://www.facebook.com/LaytonChapelBaptistChurch/">our Facebook page</a>.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="wrap">
-      <div class="section-head narrow">
+    <div class="wrap wrap-doc">
+      <div class="section-head section-head-center">
         <p class="eyebrow">Other ways to listen</p>
         <h2>Sermons anywhere</h2>
         <p>Our audio is carried by SermonAudio, which puts it on phones, smart speakers, streaming players and even a plain telephone line. Our church code is <strong>33622</strong>.</p>
@@ -110,7 +94,7 @@
       <dl class="ledger">
         <div class="ledger-row">
           <dt>Full audio archive</dt>
-          <dd><p><a href="https://www.sermonaudio.com/broadcasters/lcbc1935">Layton Chapel on SermonAudio</a>, with downloads and past series.</p></dd>
+          <dd><p><a href="https://www.sermonaudio.com/broadcasters/lcbc1935" target="_blank" rel="noopener">Layton Chapel on SermonAudio</a>, with downloads and past series.</p></dd>
         </div>
         <div class="ledger-row">
           <dt>Phones and tablets</dt>
@@ -128,20 +112,24 @@
           <dt>By telephone</dt>
           <dd><p>No internet needed. Dial <a href="tel:+17124323410">(712) 432-3410</a> and enter church code <strong>33622</strong>. Long distance charges may apply.</p></dd>
         </div>
+        <div class="ledger-row">
+          <dt>Facebook</dt>
+          <dd><p>Services also stream to <a href="https://www.facebook.com/LaytonChapelBaptistChurch/" target="_blank" rel="noopener">our Facebook page</a>.</p></dd>
+        </div>
       </dl>
     </div>
   </section>
 
-  <section class="section section-tint">
+  <section class="section section-deep">
     <div class="wrap split split-even">
       <div>
         <p class="eyebrow">Better in person</p>
         <h2>Come and sit with us</h2>
         <p>Watching online is a good way to start, and it is not the same as being in the room. Morning worship is at 11:00, and you are welcome any Sunday.</p>
-        <p>
+        <div class="btn-row">
           <a class="btn btn-primary" href="index.html#visit">Plan a visit</a>
-          <a class="btn btn-outline" href="contact.html">Ask a question</a>
-        </p>
+          <a class="btn btn-ghost" href="contact.html">Ask a question</a>
+        </div>
       </div>
       <div>
         <div class="callout">
@@ -159,7 +147,7 @@
     <div class="footer-grid">
       <div>
         <div class="footer-brand">
-          <img src="img/logo-mark.png?v=1" alt="" width="40" height="40">
+          <img src="img/logo-mark.png?v=2" alt="" width="42" height="42">
           <span>Layton Chapel</span>
         </div>
         <p>1230 Anderson Creek School Rd.<br>Spring Lake, NC 28390</p>
@@ -189,8 +177,9 @@
       <div>
         <h3>Follow along</h3>
         <ul>
-          <li><a href="https://www.youtube.com/@laytonchapelbaptistchurch">YouTube</a></li>
+          <li><a class="watch-online" href="https://www.youtube.com/@laytonchapelbaptistchurch">Watch Online</a></li>
           <li><a href="https://www.facebook.com/LaytonChapelBaptistChurch/">Facebook</a></li>
+          <li><a href="https://www.youtube.com/@laytonchapelbaptistchurch">YouTube</a></li>
           <li><a href="https://www.sermonaudio.com/broadcasters/lcbc1935">SermonAudio</a></li>
         </ul>
       </div>
@@ -202,6 +191,6 @@
   </div>
 </footer>
 
-<script src="main.js?v=2"></script>
+<script src="main.js?v=3"></script>
 </body>
 </html>

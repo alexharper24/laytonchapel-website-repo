@@ -34,8 +34,8 @@ So, concretely:
 - **No age-cutoff dates.** Children's Church is "ages 4 through 2nd grade", not the
   "four years old by 8/31/2025" rule from their announcement slide, because that
   date rolls every year.
-- **No hardcoded video IDs.** Both players use YouTube's keyless channel-level
-  embeds and resolve themselves forever. See below.
+- **No hardcoded video IDs.** The sermons grid is fetched at run time from the
+  Worker, so nobody pastes a video ID after a service. See below.
 - **There is no events page,** deliberately. It was proposed, then dropped for
   exactly this reason. Do not add one without a maintainer.
 
@@ -78,28 +78,43 @@ guarantee that; the generator is not in the repo and the files are now hand-edit
   precedent over"). Both are flagged in README for approval. Do not make further
   edits to their text without asking.
 
-## Video players
+## Sermons, live detection, and the Worker
 
-Both use YouTube endpoints that need no API key and no Worker:
+**This is the same arrangement as `hope-website-repo`, on purpose.** Alex asked for
+it explicitly, and an earlier keyless approach was replaced to get it.
 
-- Latest service: `embed/videoseries?list=UU5XmDjyOSrexPMpJgQICKUw`
-- Live: `embed/live_stream?channel=UC5XmDjyOSrexPMpJgQICKUw`
+`live-check-worker/` is a Cloudflare Worker holding the YouTube API key as a
+secret, with two endpoints: `GET /` for live status and `GET /videos` for recent
+uploads. `main.js` has one `WORKER_URL` constant.
 
-`UU5Xm...` is the uploads playlist, which is the channel ID with `UC` swapped for
-`UU`. Nobody ever has to paste a video ID.
+What runs off it:
 
-`main.js` holds the iframe `src` in `data-src` until someone presses play, so
-YouTube loads nothing for a visitor who does not watch.
+- **`.watch-online` links anywhere on the site** point at the channel normally and
+  become a pulsing red "Watch Live" during a Sunday morning service window. When
+  the Worker is configured they deep-link to the actual stream. There are three:
+  the header button, the hero button and the footer link.
+- **`sermons.html`** shows the twelve most recent services three to a row, and a
+  Live Now section that stays `hidden` unless a stream is genuinely running.
 
-**The poster image is the church's three-crosses photograph on every player, on
-purpose.** Their streams open on a holding card, so YouTube's auto-generated
-thumbnail is black for nearly every upload. **Never build a thumbnail grid for this
-church.**
+`isLive()` in `main.js` defines the service windows **once**. Only the Sunday
+morning service is streamed today. Edit that function, not the pages, to change
+them.
 
-The channel RSS feed sends no CORS header, so a static page cannot read it. A
-titled, searchable archive would need the Worker pattern in
-`hope-website-repo/live-check-worker/` **and** the church changing how it titles
-uploads. Every upload today is called "Sunday Morning Service".
+**Outside a service window the site never calls the API at all**, which keeps the
+free quota untouched six and a half days a week.
+
+**While `WORKER_URL` is an empty string everything still works:** the buttons fall
+back to a schedule-only guess pointing at the channel, and the grid shows a link to
+YouTube. Deploy the Worker and paste its URL in to light up the grid.
+
+The channel RSS feed is not an alternative. It sends no `Access-Control-Allow-Origin`
+header, so a static page cannot read it from the browser. That is why the Worker
+exists.
+
+**Thumbnails fall back to the church's own three-crosses poster.** Their streams
+open on a holding card, so YouTube's auto-generated thumbnail is black for most
+uploads. Every card also shows the service date, because every upload is titled
+"Sunday Morning Service" and the title alone cannot tell one service from another.
 
 ## Design system
 
@@ -118,6 +133,27 @@ Tokens at the top of `style.css`.
 - **Three crosses is the church's real identity**, appearing in the logo, the
   wordmark, the road sign and their chosen video thumbnail. Do not introduce a
   different device.
+- **Five section grounds, and they are meant to be visibly different:** white,
+  `--offset` #EDF2EE, `--tint` #E1EEE6, the green service strip, and `--deep`
+  #16211B for closing bands. Alternate them. A page that runs white the whole way
+  down reads as unfinished.
+- **`.split-head` spans both columns.** Use it for any two-column section with a
+  heading, so the columns start level with each other underneath it rather than
+  the right one floating up beside the heading.
+- **Square corners everywhere.** `--radius` is `0` and buttons are square too.
+  Alex asked for this specifically: pills and rounded cards read softer and
+  busier, and square edges keep the grid reading as a grid. The only round things
+  left are the live dot and the core-values bullets, which are meant to be dots.
+- **Card grids are `repeat(3, minmax(0,1fr))`, not `auto-fit`.** Six cards fall
+  3 and 3. `auto-fit` left one card stranded alone on a row. If you add a card to
+  a grid, keep the count a multiple of three or accept the gap deliberately.
+- **`.hero-inner` must not declare a width.** It is used with `.wrap`, sits later
+  in the file at the same specificity, and a `width:100%` there silently
+  overrode `.wrap` and flushed the hero copy against the left edge of the screen.
+  That bug shipped once already.
+- **Text-led pages use `.wrap-doc` (1140px) and `.doc` with a `.doc-rail`.** A
+  68ch measure inside the full 1560px container strands the words at the far left
+  with nothing beside them. The rail carries the standing calls to action.
 
 ### Do not remove
 
@@ -132,6 +168,10 @@ Tokens at the top of `style.css`.
   it.
 - The print block at the bottom of `style.css`. People print the address and the
   statement of faith.
+- The `@media (hover: none)` block. Without it the sermon card lift stays stuck
+  after a tap on iOS.
+- `[id]{scroll-margin-top:96px}`. The header is sticky at 81px, so without this
+  every in-page anchor lands with its own heading hidden underneath it.
 
 ## Working on it
 
@@ -153,7 +193,7 @@ light-mode lock, em dashes in copy, dropped `@media` blocks, sitemap gaps and na
 drift.
 
 **Bump `?v=N` on `style.css` / `main.js` in the same commit that changes the file.**
-Currently `style.css?v=3` and `main.js?v=2`.
+Currently `style.css?v=5`, `main.js?v=3`, favicon and touch icon at `?v=2`.
 
 **Commit the files in `img/`.** HTML shipping without its images is the most common
 production bug across these repos.

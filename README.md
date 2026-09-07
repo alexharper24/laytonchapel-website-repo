@@ -44,7 +44,8 @@ images is the most common production bug across these site repos.
 
 **When you change `style.css` or `main.js`, bump `?v=N` on every reference in the
 same commit.** GitHub Pages serves with a ten minute cache and browsers hold
-stylesheets through a hard refresh. Currently `style.css?v=3` and `main.js?v=2`.
+stylesheets through a hard refresh. Currently `style.css?v=5`, `main.js?v=3`, and
+`?v=2` on the favicon and touch icon.
 
 ---
 
@@ -52,12 +53,12 @@ stylesheets through a hard refresh. Currently `style.css?v=3` and `main.js?v=2`.
 
 | File | Nav | What it owns |
 |---|---|---|
-| `index.html` | Home | Hero, service times strip, welcome teaser, latest service player, ministry cards, and the `#visit` block. Carries the `Church` JSON-LD. |
+| `index.html` | Home | Hero, service times strip, welcome teaser, ministry cards, the `#visit` block, and a closing band pointing at the Gospel and beliefs. Carries the `Church` JSON-LD. |
 | `our-church.html` | Our Church | History, Meet Our Pastor, the nine core values verbatim, Life at Layton Chapel gallery. |
 | `gospel.html` | The Gospel | Gospel presentation, KJV throughout. **Needs pastoral review before launch.** |
 | `beliefs.html` | What We Believe | Statement of faith. Placeholder until the church supplies the document. |
-| `sermons.html` | Sermons | Latest service player, live stream player, and every SermonAudio listening route. |
-| `ministries.html` | Ministries | Hub. Sunday School, nursery, Children's Church, AWANA, adult Bible study. |
+| `sermons.html` | Sermons | A Live Now section that appears only while a service is streaming, a grid of the twelve most recent services three to a row, and every SermonAudio listening route. |
+| `ministries.html` | Ministries | Hub. An overview grid, then one anchored section per ministry: `#sunday-school`, `#children`, `#awana`, `#adults`, `#through-the-year`. |
 | `ministries-awana.html` | (under Ministries) | AWANA clubs, schedule, registration link. |
 | `contact.html` | (footer) | Phone, address, directions, Formspree message and prayer request form. |
 | `giving.html` | Give button | In person, by mail, and online through EasyTithe. |
@@ -84,6 +85,11 @@ block when you fill it in, not just the text.
 
 ### Blocks launch
 
+0. **Deploy the live-check Worker.** `live-check-worker/` is written and configured
+   for this church but not deployed. Until `WORKER_URL` in `main.js` is filled in,
+   the sermons grid shows a link to YouTube instead of twelve cards, and the Watch
+   Live buttons run on the schedule guess alone. See that folder's README. It is a
+   YouTube API key plus `wrangler deploy`.
 1. **Formspree form ID and the church email address.** `contact.html` has
    `REPLACE_THIS_FORMSPREE_ID` in the form action. Formspree emails a one-time
    confirmation to the destination on first submission, so it must be a real inbox
@@ -138,8 +144,16 @@ deliberately not used** and sit in `img/archive/`.
 | `og-image.jpg` | Derived from the above | Social card, every page |
 | `exterior.jpg` | Facebook cover, vignette cropped off | Homepage, Our Church, gallery |
 | `pastor-chancey.jpg` | Livestream frame | Our Church, until a portrait arrives |
-| `logo-mark.png` | YouTube avatar, resized from 1600px | Header, footer |
-| `apple-touch-icon.png`, `favicon.ico` | Derived from the mark | All pages |
+| `logo-mark.png` | YouTube avatar, background made transparent | Header, footer |
+| `apple-touch-icon.png`, `favicon.ico` | Derived from the transparent mark | All pages |
+
+**The logo background is transparent, and that took a flood fill rather than a
+make-white-transparent pass.** The mark is a green blob with three *white* crosses
+inside it, so knocking out every white pixel would have knocked out the crosses
+too. That looks fine on a white page and wrong on the dark footer. The fill ran
+inward from the image border across near-white pixels only, so the crosses stayed
+solid. `img/archive/logo-mark-transparent-1600.png` is the full-size result.
+Regenerate the small sizes from that, not from the original.
 
 `img/archive/` holds the superseded and unused originals, including the 145px logo
 off the old site, the 200px Facebook copy, the 1600px mark, the horizontal wordmark,
