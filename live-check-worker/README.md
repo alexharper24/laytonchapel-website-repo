@@ -31,31 +31,49 @@ detection.
 
 ## One time setup
 
-1. **YouTube API key** at https://console.cloud.google.com/
-   - Create a project.
-   - APIs and Services -> Library -> enable **YouTube Data API v3**.
-   - Credentials -> Create credentials -> **API key**. Copy it.
-   - Edit the key -> API restrictions -> restrict it to **YouTube Data API v3**.
+**A YouTube Data API key is the only real work here.** Cloudflare is already
+authorized on this machine.
 
-2. The channel is already filled in (`UC5XmDjyOSrexPMpJgQICKUw` =
-   youtube.com/@laytonchapelbaptistchurch). To re-confirm it:
+At https://console.cloud.google.com/
 
-   ```
-   https://www.googleapis.com/youtube/v3/channels?part=id&forHandle=laytonchapelbaptistchurch&key=YOUR_KEY
-   ```
+- **Create a NEW project.** Do not reuse the one behind Hope's key. Quota is per
+  project, not per key, and Hope already polls across two Sunday service windows,
+  which comes close to the whole 10,000 units a day on its own. A separate
+  project gives Layton Chapel its own 10,000.
+- APIs and Services -> Library -> enable **YouTube Data API v3**.
+- Credentials -> Create credentials -> **API key**. Copy it.
+- Edit the key -> API restrictions -> restrict it to **YouTube Data API v3**.
+
+The channel is already filled in (`UC5XmDjyOSrexPMpJgQICKUw` =
+youtube.com/@laytonchapelbaptistchurch). To re-confirm it:
+
+```
+https://www.googleapis.com/youtube/v3/channels?part=id&forHandle=laytonchapelbaptistchurch&key=YOUR_KEY
+```
 
 ## Deploy
 
-From inside this folder:
+From inside this folder.
+
+**Use the Program Files node explicitly.** The `nvm` shim on PATH points into
+another user's profile and is unreadable from this account, so a bare `npx`
+fails with "Could not determine Node.js install directory". Same reason
+`roanoke-website-repo` pins its node path in launch.json.
 
 ```bash
-npm install -g wrangler          # first time only
-wrangler login                   # opens a browser to authorize Cloudflare
-wrangler secret put YT_API_KEY   # paste the API key when prompted
-wrangler deploy
+"/c/Program Files/nodejs/npx.cmd" wrangler secret put YT_API_KEY
 ```
 
-Deploy prints a URL like `https://laytonchapel-live-check.<subdomain>.workers.dev`.
+```bash
+"/c/Program Files/nodejs/npx.cmd" wrangler deploy
+```
+
+`wrangler login` is not needed. The account (alex24harper@gmail.com, the one
+Hope's Worker runs on) is already authorized; credentials sit in
+`C:\Users\aharper\.wrangler\config\default.toml`.
+
+Deploy prints a URL. Based on Hope's, it will be
+`https://laytonchapel-live-check.alexharper.workers.dev`.
 
 ## Turn it on in the website
 
@@ -70,9 +88,13 @@ Bump `?v=N` on every `main.js` reference in the same commit, then push.
 
 ## Notes specific to this church
 
-- **`ALLOW_ORIGIN` is `https://www.laytonchapel.org`.** The Worker sends CORS for
-  that origin only. To test against `http://localhost:8177`, add it temporarily
-  and take it back out before deploying for real.
+- **`ALLOWED_ORIGINS` covers the preview locations as well as production:**
+  `https://www.laytonchapel.org`, the apex, `https://alexharper24.github.io`, and
+  `http://localhost:8177`. The response echoes whichever of those asked, and the
+  edge cache key includes the origin so one can never be served another's CORS
+  header. That means the sermon grid can be checked on the Pages preview and
+  locally, before DNS moves. Hope's Worker allows one origin only; this one
+  deliberately does not.
 - **Every upload is titled "Sunday Morning Service".** The grid therefore shows
   the service date under each card, because the title alone cannot tell one
   service from another. If the church ever starts titling uploads with the sermon

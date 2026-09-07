@@ -12,15 +12,34 @@
 
 const CHANNEL_ID = "UC5XmDjyOSrexPMpJgQICKUw"; // youtube.com/@laytonchapelbaptistchurch
 const UPLOADS_PLAYLIST = "UU5XmDjyOSrexPMpJgQICKUw"; // channel uploads playlist = channel id with UC -> UU
-const ALLOW_ORIGIN = "https://www.laytonchapel.org";
+// Origins allowed to read this Worker. The production domain plus the two
+// places the site is previewed before DNS moves, so the sermon grid can
+// actually be verified before launch. The response carries whichever of
+// these made the request, and the cache key includes it so one origin can
+// never be served another origin's CORS header.
+const ALLOWED_ORIGINS = [
+  "https://www.laytonchapel.org",
+  "https://laytonchapel.org",
+  "https://alexharper24.github.io",
+  "http://localhost:8177",
+];
+const DEFAULT_ORIGIN = ALLOWED_ORIGINS[0];
+
+function originFor(request) {
+  const o = request.headers.get("Origin");
+  return ALLOWED_ORIGINS.includes(o) ? o : DEFAULT_ORIGIN;
+}
+
+function corsFor(origin) {
+  return {
+    "Access-Control-Allow-Origin": origin,
+    "Vary": "Origin",
+    "Content-Type": "application/json",
+  };
+}
 const CACHE_VERSION = "v3";        // bump to invalidate edge-cached responses after a logic change
 const LIVE_CACHE_SECONDS = 120;    // live check is 100 quota units, so cache it
 const VIDEOS_CACHE_SECONDS = 900;  // service list; short enough that a new service appears promptly
-
-const CORS = {
-  "Access-Control-Allow-Origin": ALLOW_ORIGIN,
-  "Content-Type": "application/json",
-};
 
 // Parse an ISO 8601 duration (e.g. PT1H2M3S) into seconds. Returns 0 for a
 // missing or zero-length duration, which is what ended live streams with no
@@ -35,15 +54,17 @@ function isoDurationSeconds(d) {
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
-    if (url.pathname === "/videos") return handleVideos(url, env, ctx);
-    return handleLive(env, ctx);
+    const origin = originFor(request);
+    if (url.pathname === "/videos") return handleVideos(url, env, ctx, origin);
+    return handleLive(env, ctx, origin);
   },
 };
 
 // Is the channel live right now?
-async function handleLive(env, ctx) {
+async function handleLive(env, ctx, origin) {
   const cache = caches.default;
-  const cacheKey = new Request("https://livecheck.internal/" + CACHE_VERSION + "/live/" + CHANNEL_ID);
+  const cacheKey = new Request("https://livecheck.internal/" + CACHE_VERSION +
+    "/live/" + CHANNEL_ID + "/" + encodeURIComponent(origin));
   const cached = await cache.match(cacheKey);
   if (cached) return cached;
 
@@ -70,7 +91,7 @@ async function handleLive(env, ctx) {
       videoId: videoId,
       watchUrl: videoId ? "https://www.youtube.com/watch?v=" + videoId : null,
     }),
-    { headers: Object.assign({}, CORS, { "Cache-Control": "max-age=" + LIVE_CACHE_SECONDS }) }
+    { headers: Object.assign({}, corsFor(origin), { "Cache-Control": "max-age=" + LIVE_CACHE_SECONDS }) }
   );
   ctx.waitUntil(cache.put(cacheKey, resp.clone()));
   return resp;
@@ -79,10 +100,11 @@ async function handleLive(env, ctx) {
 // Recent uploads (sermon library), paginated. Only returns videos that can
 // actually be watched: public, embeddable, fully processed, and not a live or
 // upcoming broadcast (ended live streams with no saved recording are excluded).
-async function handleVideos(url, env, ctx) {
+async function handleVideos(url, env, ctx, origin) {
   const pageToken = url.searchParams.get("page") || "";
   const cache = caches.default;
-  const cacheKey = new Request("https://livecheck.internal/" + CACHE_VERSION + "/videos/" + (pageToken || "first"));
+  const cacheKey = new Request("https://livecheck.internal/" + CACHE_VERSION +
+    "/videos/" + (pageToken || "first") + "/" + encodeURIComponent(origin));
   const cached = await cache.match(cacheKey);
   if (cached) return cached;
 
@@ -147,7 +169,7 @@ async function handleVideos(url, env, ctx) {
 
   const resp = new Response(
     JSON.stringify({ videos: videos, nextPage: nextPage }),
-    { headers: Object.assign({}, CORS, { "Cache-Control": "max-age=" + VIDEOS_CACHE_SECONDS }) }
+    { headers: Object.assign({}, corsFor(origin), { "Cache-Control": "max-age=" + VIDEOS_CACHE_SECONDS }) }
   );
   ctx.waitUntil(cache.put(cacheKey, resp.clone()));
   return resp;
