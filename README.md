@@ -44,7 +44,7 @@ images is the most common production bug across these site repos.
 
 **When you change `style.css` or `main.js`, bump `?v=N` on every reference in the
 same commit.** GitHub Pages serves with a ten minute cache and browsers hold
-stylesheets through a hard refresh. Everything is currently at `?v=1`.
+stylesheets through a hard refresh. Currently `style.css?v=3` and `main.js?v=2`.
 
 ---
 

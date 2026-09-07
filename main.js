@@ -56,7 +56,7 @@
       var iframe = document.createElement('iframe');
       iframe.setAttribute('src', src + (src.indexOf('?') > -1 ? '&' : '?') + 'autoplay=1');
       iframe.setAttribute('title', poster.getAttribute('data-title') || 'Video player');
-      iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
+      iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
       iframe.setAttribute('allowfullscreen', '');
       iframe.setAttribute('loading', 'lazy');
       iframe.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');

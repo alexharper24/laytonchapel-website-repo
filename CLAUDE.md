@@ -153,7 +153,7 @@ light-mode lock, em dashes in copy, dropped `@media` blocks, sitemap gaps and na
 drift.
 
 **Bump `?v=N` on `style.css` / `main.js` in the same commit that changes the file.**
-Currently `style.css?v=3` and `main.js?v=1`.
+Currently `style.css?v=3` and `main.js?v=2`.
 
 **Commit the files in `img/`.** HTML shipping without its images is the most common
 production bug across these repos.
