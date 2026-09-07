@@ -263,13 +263,21 @@
      normal new tab if the browser blocks the popup. */
   Array.prototype.forEach.call(document.querySelectorAll('[data-popout]'), function (a) {
     a.addEventListener('click', function (e) {
+      // Cancel the anchor first, unconditionally. Passing `noopener` in the
+      // feature string makes window.open return null by spec, so the old
+      // `if (w) preventDefault()` never fired and the browser opened BOTH a
+      // popup and the target="_blank" tab. Opener access is severed on the
+      // returned window instead.
+      e.preventDefault();
       var w = window.open(a.href, 'lcbcGiving',
-        'noopener,width=560,height=860,menubar=no,toolbar=no,location=yes,resizable=yes,scrollbars=yes');
+        'width=560,height=860,menubar=no,toolbar=no,location=yes,resizable=yes,scrollbars=yes');
       if (w) {
-        e.preventDefault();
+        try { w.opener = null; } catch (err) {}
         w.focus();
+      } else {
+        // Popup blocked. Fall back to a normal new tab.
+        window.open(a.href, '_blank', 'noopener');
       }
-      // If the popup was blocked, the click proceeds as a normal link.
     });
   });
 })();

@@ -168,6 +168,14 @@ Tokens at the top of `style.css`.
   it.
 - The print block at the bottom of `style.css`. People print the address and the
   statement of faith.
+- **`--footer` is a separate, darker shade from `--deep`.** Four pages close on
+  a dark `.section-deep` band, and when the footer shared that colour the two
+  merged into one slab. Keep them distinct, and keep the footer's top rule.
+- **Never pass `noopener` in a `window.open` feature string.** By spec that
+  makes `window.open` return `null`, so a handler that keys off the return
+  value never cancels the anchor and the browser opens both a popup and the
+  `target="_blank"` tab. Sever `opener` on the returned window instead. That
+  bug shipped once on the giving page.
 - The `@media (hover: none)` block. Without it the sermon card lift stays stuck
   after a tap on iOS.
 - `[id]{scroll-margin-top:96px}`. The header is sticky at 81px, so without this
@@ -193,7 +201,7 @@ light-mode lock, em dashes in copy, dropped `@media` blocks, sitemap gaps and na
 drift.
 
 **Bump `?v=N` on `style.css` / `main.js` in the same commit that changes the file.**
-Currently `style.css?v=6`, `main.js?v=3`, favicon and touch icon at `?v=2`.
+Currently `style.css?v=7`, `main.js?v=4`, favicon and touch icon at `?v=2`.
 
 **Commit the files in `img/`.** HTML shipping without its images is the most common
 production bug across these repos.

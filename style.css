@@ -31,8 +31,10 @@
      bands rather than as a rendering accident. Plus one dark band. */
   --offset:#EDF2EE;
   --tint:#E1EEE6;
-  --deep:#16211B;
-  --deep-soft:#1E2C24;
+  --deep:#1D2E24;      /* dark section bands */
+  --deep-soft:#26382D; /* cards sitting on a dark band */
+  --footer:#101A14;    /* deliberately darker than --deep, so a closing
+                          dark section does not merge into the footer */
 
   --shadow-sm:0 1px 3px rgba(22,32,26,.07);
   --shadow:0 3px 14px rgba(22,32,26,.09);
@@ -247,18 +249,18 @@ a:hover{color:var(--green-dark)}
    wide screen. */
 .strip-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
   max-width:1180px;margin-inline:auto}
-.strip-cell{padding:.95rem 1.5rem;border-right:1px solid rgba(255,255,255,.18)}
+.strip-cell{padding:.6rem 1.5rem;border-right:1px solid rgba(255,255,255,.18)}
 .strip-cell:first-child{padding-left:0}
 .strip-cell:last-child{border-right:0;padding-right:0}
 .strip-cell h3{
-  font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;
-  color:rgba(255,255,255,.7);margin:0 0 .3rem;font-weight:700;
+  font-size:.66rem;letter-spacing:.15em;text-transform:uppercase;
+  color:rgba(255,255,255,.7);margin:0 0 .15rem;font-weight:700;line-height:1.4;
 }
-.strip-cell p{margin:0;color:var(--white);font-size:.965rem;line-height:1.5;max-width:none}
+.strip-cell p{margin:0;color:var(--white);font-size:.94rem;line-height:1.4;max-width:none}
 .strip-cell b{font-family:var(--display);font-weight:700}
 .strip-cell a{
   color:var(--white);text-decoration:underline;text-decoration-color:rgba(255,255,255,.55);
-  display:inline-block;padding-block:.45rem;
+  display:inline-block;padding-block:.3rem;
 }
 .strip-cell a:hover{color:var(--white);text-decoration-color:#fff}
 @media (max-width:780px){
@@ -322,6 +324,13 @@ a:hover{color:var(--green-dark)}
   .doc{grid-template-columns:minmax(0,1fr) 320px}
   .doc-rail{position:sticky;top:104px}
 }
+/* The rail is narrow. Two buttons side by side wrap onto separate rows at
+   their own natural widths, which reads as a mistake. Stack them and let
+   them fill the box so every control in the rail is the same width. */
+.doc-rail{min-width:0}
+.doc-rail .callout{max-width:100%}
+.doc-rail .btn-row{flex-direction:column;align-items:stretch;gap:.55rem}
+.doc-rail .btn-row .btn{width:100%}
 .doc-body > *{max-width:var(--prose)}
 .doc-body > .ledger,.doc-body > .values,.doc-body > .btn-row,.doc-body > .verse{max-width:none}
 .doc-rail > * + *{margin-top:1rem}
@@ -512,7 +521,11 @@ a:hover{color:var(--green-dark)}
 
 /* ---------- footer ---------- */
 
-.site-footer{background:var(--deep);color:#C1CFC7;padding:clamp(2.5rem,5vw,3.75rem) 0 1.75rem}
+.site-footer{
+  background:var(--footer);color:#C1CFC7;
+  padding:clamp(2.5rem,5vw,3.75rem) 0 1.75rem;
+  border-top:1px solid rgba(255,255,255,.09);
+}
 .footer-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:2rem 2.5rem}
 .site-footer h3{
   font-size:.76rem;letter-spacing:.15em;text-transform:uppercase;
