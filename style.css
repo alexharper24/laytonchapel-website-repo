@@ -306,7 +306,9 @@ a:hover{color:var(--green-dark)}
   .split{grid-template-columns:1.08fr .92fr}
   .split-even{grid-template-columns:1fr 1fr}
   .split-wide{grid-template-columns:1.35fr .65fr}
-  .split-media-first > .split-media{order:-1}
+  /* No .split-media-first helper. Reordering with `order` also reorders
+     .split-head, which then lands underneath the media instead of above
+     both columns. Put the media div first in the markup instead. */
 }
 .split-media img{border-radius:var(--radius);box-shadow:var(--shadow)}
 .figure{margin:0}
@@ -376,16 +378,28 @@ a:hover{color:var(--green-dark)}
 .prose h3{margin-top:1.8rem;color:var(--green)}
 .prose .lead{font-size:1.16rem;color:var(--ink)}
 
-/* Core values and similar lists. Two columns on a wide screen so nine items
-   do not run down the far left of the page in a single thin ribbon. */
-.values{list-style:none;padding:0;margin:0;max-width:none;display:grid;grid-template-columns:1fr;gap:1.1rem}
-@media (min-width:840px){.values{grid-template-columns:1fr 1fr;gap:1.4rem 2.5rem}}
-.values li{
-  position:relative;padding:0 0 0 1.6rem;margin:0;max-width:56ch;
+/* Core values. Nine statements, three across, so they fall 3-3-3 and each
+   one fills the column it is given. An earlier version capped each item at
+   56ch inside a much wider column, which left a large dead gutter down the
+   middle of the page. Do not put a max-width back on the item.
+
+   The green rule and the short label do the visual work. The label is an
+   added affordance, not the church's wording; the statement beneath it is
+   verbatim and stays that way. */
+.values{
+  list-style:none;padding:0;margin:0;max-width:none;
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:2.25rem 2.25rem;
 }
-.values li::before{
-  content:"";position:absolute;left:0;top:.6em;
-  width:9px;height:9px;border-radius:50%;background:var(--green-bright);
+@media (max-width:1080px){.values{grid-template-columns:repeat(2,minmax(0,1fr));gap:2rem}}
+@media (max-width:680px){.values{grid-template-columns:minmax(0,1fr);gap:1.75rem}}
+.values li{
+  margin:0;max-width:none;padding:1.05rem 0 0;
+  border-top:3px solid var(--green-bright);font-size:1rem;line-height:1.6;
+}
+.values .value-label{
+  display:block;font-family:var(--display);font-weight:700;font-size:.72rem;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--green);
+  margin:0 0 .5rem;
 }
 .values li strong{color:var(--ink)}
 

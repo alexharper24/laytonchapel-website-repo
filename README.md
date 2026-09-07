@@ -44,7 +44,7 @@ images is the most common production bug across these site repos.
 
 **When you change `style.css` or `main.js`, bump `?v=N` on every reference in the
 same commit.** GitHub Pages serves with a ten minute cache and browsers hold
-stylesheets through a hard refresh. Currently `style.css?v=5`, `main.js?v=3`, and
+stylesheets through a hard refresh. Currently `style.css?v=6`, `main.js?v=3`, and
 `?v=2` on the favicon and touch icon.
 
 ---
@@ -123,7 +123,12 @@ block when you fill it in, not just the text.
     date, because a dated event goes stale. Confirm it is annual.
 13. **Is 1935 this congregation's founding or a predecessor's?** The church's own
     copy says "originally established in 1935", which is doing some work.
-14. **Two copy corrections were made** to the church's own text and should be
+14. **A one-word label was added above each core value** on `our-church.html`
+    (Lordship, Worship, God's Word, and so on). Those labels are ours, not the
+    church's wording, and they exist so nine statements read as a scannable
+    grid. The statements underneath them are verbatim. Worth mentioning when
+    the church reviews the page.
+15. **Two copy corrections were made** to the church's own text and should be
     approved: "reach People" to "reach people", and "takes precedent over" to
     "takes precedence over". Both are in the Sunday School paragraph and the core
     values respectively.
