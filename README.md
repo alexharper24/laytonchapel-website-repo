@@ -44,7 +44,7 @@ images is the most common production bug across these site repos.
 
 **When you change `style.css` or `main.js`, bump `?v=N` on every reference in the
 same commit.** GitHub Pages serves with a ten minute cache and browsers hold
-stylesheets through a hard refresh. Currently `style.css?v=7`, `main.js?v=4`, and
+stylesheets through a hard refresh. Currently `style.css?v=8`, `main.js?v=4`, and
 `?v=2` on the favicon and touch icon.
 
 ---
@@ -147,6 +147,7 @@ deliberately not used** and sit in `img/archive/`.
 | `hero-crosses.jpg` | YouTube channel banner | Homepage hero |
 | `sermon-poster.jpg` | YouTube video thumbnail | Both video players |
 | `og-image.jpg` | Derived from the above | Social card, every page |
+| `page-banner.jpg` | The church's sunset photo, cropped 3:1 | The banner on every page except home |
 | `exterior.jpg` | Facebook cover, vignette cropped off | Homepage, Our Church, gallery |
 | `pastor-chancey.jpg` | Livestream frame | Our Church, until a portrait arrives |
 | `logo-mark.png` | YouTube avatar, background made transparent | Header, footer |

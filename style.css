@@ -244,14 +244,19 @@ a:hover{color:var(--green-dark)}
    Deliberately compact. It sits directly under the hero and its job is to be
    scanned in two seconds, not to occupy a screen of its own. */
 .strip{background:var(--green);color:var(--white)}
-/* Held to a narrower measure than the rest of the page and centred, so the
-   four times read as one group instead of stretching to both edges of a
-   wide screen. */
-.strip-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
-  max-width:1180px;margin-inline:auto}
-.strip-cell{padding:.6rem 1.5rem;border-right:1px solid rgba(255,255,255,.18)}
-.strip-cell:first-child{padding-left:0}
-.strip-cell:last-child{border-right:0;padding-right:0}
+/* Flex, not grid, and centred as a group. Equal grid tracks forced the long
+   address to wrap onto a second line while the short cells sat half empty.
+   Letting each cell take only the width its own line needs keeps all four on
+   one row and centres the set under the hero. */
+.strip-grid{
+  display:flex;flex-wrap:wrap;justify-content:center;align-items:stretch;
+  margin-inline:auto;
+}
+.strip-cell{
+  flex:0 1 auto;text-align:center;
+  padding:.6rem 1.6rem;border-right:1px solid rgba(255,255,255,.18);
+}
+.strip-cell:last-child{border-right:0}
 .strip-cell h3{
   font-size:.66rem;letter-spacing:.15em;text-transform:uppercase;
   color:rgba(255,255,255,.7);margin:0 0 .15rem;font-weight:700;line-height:1.4;
@@ -263,15 +268,18 @@ a:hover{color:var(--green-dark)}
   display:inline-block;padding-block:.3rem;
 }
 .strip-cell a:hover{color:var(--white);text-decoration-color:#fff}
-@media (max-width:780px){
-  .strip-grid{grid-template-columns:1fr 1fr}
-  .strip-cell{padding:.9rem 0;border-right:0;border-bottom:1px solid rgba(255,255,255,.18)}
-  .strip-cell:nth-child(odd){padding-right:1rem}
-  .strip-cell:last-child{border-bottom:0;grid-column:1/-1}
+/* One line per cell once there is room for all four across. Below that the
+   nowrap is released and the cells stack, so nothing ever overflows. */
+@media (min-width:900px){
+  .strip-cell p{white-space:nowrap}
 }
-@media (max-width:460px){
-  .strip-grid{grid-template-columns:1fr}
-  .strip-cell:nth-child(odd){padding-right:0}
+@media (max-width:899px){
+  .strip-grid{flex-direction:column;align-items:center}
+  .strip-cell{
+    width:100%;max-width:460px;padding:.7rem 0;
+    border-right:0;border-bottom:1px solid rgba(255,255,255,.18);
+  }
+  .strip-cell:last-child{border-bottom:0}
 }
 
 /* ---------- sections ---------- */
@@ -555,9 +563,27 @@ a:hover{color:var(--green-dark)}
 
 /* ---------- interior page header ---------- */
 
-.page-head{background:var(--tint);border-bottom:1px solid #CFE2D6;padding:clamp(2.25rem,4.5vw,3.5rem) 0}
-.page-head h1{margin-bottom:.4rem}
-.page-head p{font-size:1.15rem;color:var(--body);max-width:58ch;margin:0}
+/* The church's own sunset photograph, cropped to a 3:1 strip. Set as a
+   background rather than an <img> because it is decorative: it carries no
+   information a screen reader needs, and this way it is one rule instead of
+   markup repeated across nine pages. The gradient is part of the same
+   shorthand, so the scrim can never go missing and leave white text on a
+   bright sky. */
+.page-head{
+  background:
+    linear-gradient(180deg,rgba(9,15,11,.68) 0%,rgba(9,15,11,.56) 45%,rgba(9,15,11,.82) 100%),
+    url("img/page-banner.jpg") center 58% / cover no-repeat,
+    var(--deep);
+  padding:clamp(2.6rem,5.2vw,4rem) 0;
+}
+.page-head h1{margin-bottom:.4rem;color:var(--white);text-shadow:0 2px 18px rgba(0,0,0,.5)}
+.page-head p{
+  font-size:1.15rem;color:rgba(255,255,255,.95);max-width:58ch;margin:0;
+  text-shadow:0 1px 14px rgba(0,0,0,.5);
+}
+.page-head .eyebrow{color:var(--gold-light);text-shadow:0 1px 10px rgba(0,0,0,.55)}
+.page-head a{color:#B6E9CD}
+.page-head a:hover{color:var(--white)}
 
 /* ---------- misc ---------- */
 
