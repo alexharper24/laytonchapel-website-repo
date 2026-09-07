@@ -1,0 +1,17 @@
+# OS and editor noise
+Thumbs.db
+Desktop.ini
+.DS_Store
+*.swp
+
+# Large source media. Only web-optimized derivatives belong in img/.
+source-photos/
+*.HEIC
+*.heic
+*.dng
+*.DNG
+*.psd
+*.PSD
+*.mov
+*.MOV
+*.mp4
