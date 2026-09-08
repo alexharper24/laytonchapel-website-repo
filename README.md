@@ -167,7 +167,7 @@ deliberately not used** and sit in `img/archive/`.
 | `sermon-poster.jpg` | YouTube video thumbnail | Both video players |
 | `og-image.jpg` | Derived from the above | Social card, every page |
 | `page-banner.jpg` | The church's sunset photo, cropped 3:1 | The banner on every page except home |
-| `exterior.jpg` | Facebook cover, vignette cropped off | Homepage, Our Church, gallery |
+| `church-front.jpg` | Photograph of the church front supplied by Alex, cropped | Homepage welcome section, Our Church gallery |
 | `pastor-chancey.jpg` | Livestream frame, supplied clean by Alex with no name graphic burned in | Our Church |
 | `history-congregation.jpg` | Historic photograph supplied by Alex | Our Church history section and gallery |
 | `awana-clubs.jpg` | Awana Clubs logo supplied by Alex | The AWANA section on Ministries |
