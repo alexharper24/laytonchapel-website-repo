@@ -7,9 +7,23 @@ Intended to be hosted free on GitHub Pages at **www.laytonchapel.org**.
 Full audit of the old site and the reasoning behind this structure:
 https://claude.ai/code/artifact/c620185d-55bb-45c8-af2a-6a6a60a87c48
 
-> **Status: scaffolded, not launched.** The pages are real and complete except where
-> a `Replace this` box appears on screen. Those boxes are deliberate and are all
-> listed below. Do not point DNS at this until the pending list is cleared.
+> **Status: review build, not launched.** The pages are real and complete except
+> where a `Replace this` box appears on screen. Those boxes are deliberate and are
+> all listed below. Do not point DNS at this until the pending list is cleared.
+>
+> **Review URL:** https://alexharper24.github.io/laytonchapel-website-repo/
+>
+> Two things are deliberately different from the launch state, and **both must be
+> undone at cutover**:
+>
+> 1. **Every page carries `<meta name="robots" content="noindex">`,** so the review
+>    build cannot be indexed before the church has approved it. Each one is marked
+>    `REVIEW BUILD ONLY`. Delete them all on launch day:
+>    `grep -n 'REVIEW BUILD ONLY' *.html`
+> 2. **`CNAME` is held back as `CNAME.at-cutover`.** A CNAME file makes Pages serve
+>    the repo only at the custom domain, which would make the review URL
+>    unreachable while DNS still points at the old host. Rename it back to `CNAME`
+>    when you set the custom domain in Pages settings.
 
 ---
 
