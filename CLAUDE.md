@@ -166,6 +166,12 @@ Tokens at the top of `style.css`.
   bare `<div>`, which made the whole nav unreachable by keyboard at phone width.
 - The `_gotcha` honeypot on the contact form. Formspree discards anything that fills
   it.
+- **`target="_blank" rel="noopener"` on every off-site link.** YouTube, Facebook,
+  SermonAudio, Google Maps, EasyTithe and the AWANA registration site all open in
+  their own tab, so a visitor never loses the church's site. It is declared in the
+  markup on all 66 of them rather than left to JavaScript, and `main.js` has a
+  pass that catches anything added later and appends a visually hidden
+  "opens in a new tab" for screen readers. Internal links must NOT get a target.
 - The print block at the bottom of `style.css`. People print the address and the
   statement of faith.
 - **`.page-head` is the sunset photograph, set as a CSS background rather than
@@ -209,7 +215,7 @@ light-mode lock, em dashes in copy, dropped `@media` blocks, sitemap gaps and na
 drift.
 
 **Bump `?v=N` on `style.css` / `main.js` in the same commit that changes the file.**
-Currently `style.css?v=8`, `main.js?v=4`, favicon and touch icon at `?v=2`.
+Currently `style.css?v=9`, `main.js?v=5`, favicon and touch icon at `?v=2`.
 
 **Commit the files in `img/`.** HTML shipping without its images is the most common
 production bug across these repos.

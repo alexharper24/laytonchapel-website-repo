@@ -257,6 +257,32 @@
     setInterval(checkLive, 60000);
   })();
 
+  /* ---------- links that leave the site ----------
+     Every off-site link already carries target="_blank" rel="noopener" in the
+     markup, so this does not depend on JavaScript. This pass is a safety net
+     for anything added later, and it is what tells a screen reader the link
+     will open somewhere new.
+
+     Skipped: .watch-online, whose label is rewritten during a service, and
+     [data-popout], which opens its own window through the handler below. */
+  (function () {
+    var here = window.location.host;
+    Array.prototype.forEach.call(document.querySelectorAll('a[href^="http"]'), function (a) {
+      if (a.host === here) { return; }
+
+      if (!a.getAttribute('target')) { a.setAttribute('target', '_blank'); }
+      if (!a.getAttribute('rel')) { a.setAttribute('rel', 'noopener'); }
+
+      if (a.classList.contains('watch-online') || a.hasAttribute('data-popout')) { return; }
+      if (a.querySelector('.visually-hidden')) { return; }
+
+      var note = document.createElement('span');
+      note.className = 'visually-hidden';
+      note.textContent = ' (opens in a new tab)';
+      a.appendChild(note);
+    });
+  })();
+
   /* ---------- popout links ----------
      Giving hands off to an outside payment provider. Open it in its own window
      so the visitor keeps the church's site behind them, and fall back to a

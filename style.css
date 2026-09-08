@@ -592,6 +592,13 @@ a:hover{color:var(--green-dark)}
 .linklist a{display:inline-flex;align-items:center;min-height:44px}
 .gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1rem}
 .gallery img{border-radius:var(--radius);box-shadow:var(--shadow-sm);width:100%}
+/* Off the screen but still read aloud. Used for the "opens in a new tab"
+   note main.js appends to every off-site link. Not display:none, which would
+   hide it from screen readers too. */
+.visually-hidden{
+  position:absolute;width:1px;height:1px;margin:-1px;padding:0;
+  overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0;
+}
 .center{text-align:center}
 .mt-1{margin-top:.75rem}
 .mt-2{margin-top:1.5rem}
