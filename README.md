@@ -113,22 +113,27 @@ block when you fill it in, not just the text.
 
 ### Worth confirming, not blocking
 
-9. **"We sing from the hymnal"** appears on `index.html` twice. It is drawn from the
+9. **The historic congregation photograph** on `our-church.html` is captioned only
+   as "A photograph from the church's history", because nothing about its date,
+   the building, or the people in it is known here. Ask the church for the year
+   and the occasion, and whether they want anyone named. Do not guess from the
+   picture.
+10. **"We sing from the hymnal"** appears on `index.html` twice. It is drawn from the
    church's own on-screen service graphics, which display hymn titles and numbers.
    Have the church confirm the wording.
-10. **AWANA club age bands** on `ministries-awana.html` are AWANA's standard bands,
+11. **AWANA club age bands** on `ministries-awana.html` are AWANA's standard bands,
     not the church's own wording. The registration site confirms all six clubs exist.
-11. **The EasyTithe link,** giving categories, and whether they issue annual statements.
-12. **Trunk or Treat** is described on `ministries.html` as a fall outreach with no
+12. **The EasyTithe link,** giving categories, and whether they issue annual statements.
+13. **Trunk or Treat** is described on `ministries.html` as a fall outreach with no
     date, because a dated event goes stale. Confirm it is annual.
-13. **Is 1935 this congregation's founding or a predecessor's?** The church's own
+14. **Is 1935 this congregation's founding or a predecessor's?** The church's own
     copy says "originally established in 1935", which is doing some work.
-14. **A one-word label was added above each core value** on `our-church.html`
+15. **A one-word label was added above each core value** on `our-church.html`
     (Lordship, Worship, God's Word, and so on). Those labels are ours, not the
     church's wording, and they exist so nine statements read as a scannable
     grid. The statements underneath them are verbatim. Worth mentioning when
     the church reviews the page.
-15. **Two copy corrections were made** to the church's own text and should be
+16. **Two copy corrections were made** to the church's own text and should be
     approved: "reach People" to "reach people", and "takes precedent over" to
     "takes precedence over". Both are in the Sunday School paragraph and the core
     values respectively.
@@ -149,7 +154,8 @@ deliberately not used** and sit in `img/archive/`.
 | `og-image.jpg` | Derived from the above | Social card, every page |
 | `page-banner.jpg` | The church's sunset photo, cropped 3:1 | The banner on every page except home |
 | `exterior.jpg` | Facebook cover, vignette cropped off | Homepage, Our Church, gallery |
-| `pastor-chancey.jpg` | Livestream frame | Our Church, until a portrait arrives |
+| `pastor-chancey.jpg` | Livestream frame, supplied clean by Alex with no name graphic burned in | Our Church |
+| `history-congregation.jpg` | Historic photograph supplied by Alex | Our Church history section and gallery |
 | `logo-mark.png` | YouTube avatar, background made transparent | Header, footer |
 | `apple-touch-icon.png`, `favicon.ico` | Derived from the transparent mark | All pages |
 

@@ -230,11 +230,21 @@ event content. No page publishes them.
 
 ## Copy rules
 
-- **No em or en dashes in copy phrasing.** Not in body text, headings, alt text or
-  meta descriptions. A dash joining clauses is the AI tell. Periods, commas, colons
-  and parentheses instead. `&mdash;` separating the page name from the church name
-  in a `<title>` or `og:title` is correct typography and stays, as are `&ndash;` in
-  ranges like 6:00&ndash;7:30.
+- **No em or en dashes anywhere. None.** Not in body text, headings, alt text, meta
+  descriptions, and **not in `<title>` or `og:title` either.** The root CLAUDE.md
+  exempts a dash separating a name from a location in a title, and site-checks
+  allows it, but Alex asked for it gone on this site: titles use a **pipe**
+  (`Sermons | Layton Chapel Baptist Church`), which is ordinary web convention.
+  This is a deliberate departure. Do not put the em dashes back.
+- **No middots, no ellipsis characters, no en dashes in ranges.** Clock ranges are
+  spelled out ("6:00 to 7:30 PM"), verse ranges take a plain hyphen
+  ("Ephesians 2:8-9"), and separators are commas. There is currently **zero
+  non-ASCII** in the HTML, CSS and JS. Keep it that way; it is the quickest check
+  that no typographic tell has crept back in:
+
+  ```bash
+  grep -P '[^ -]' *.html style.css main.js
+  ```
 - No stock AI phrasing. No "elevate", "seamless", "unlock", "fast-paced".
 - Do not duplicate paragraphs across two pages. The homepage welcome teaser is
   written differently from the Our Church copy on purpose. Keep it that way.
