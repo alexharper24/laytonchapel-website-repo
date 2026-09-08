@@ -58,7 +58,7 @@ images is the most common production bug across these site repos.
 
 **When you change `style.css` or `main.js`, bump `?v=N` on every reference in the
 same commit.** GitHub Pages serves with a ten minute cache and browsers hold
-stylesheets through a hard refresh. Currently `style.css?v=9`, `main.js?v=5`, and
+stylesheets through a hard refresh. Currently `style.css?v=10`, `main.js?v=5`, and
 `?v=2` on the favicon and touch icon.
 
 ---
@@ -170,6 +170,7 @@ deliberately not used** and sit in `img/archive/`.
 | `exterior.jpg` | Facebook cover, vignette cropped off | Homepage, Our Church, gallery |
 | `pastor-chancey.jpg` | Livestream frame, supplied clean by Alex with no name graphic burned in | Our Church |
 | `history-congregation.jpg` | Historic photograph supplied by Alex | Our Church history section and gallery |
+| `awana-clubs.jpg` | Awana Clubs logo supplied by Alex | The AWANA section on Ministries |
 | `logo-mark.png` | YouTube avatar, background made transparent | Header, footer |
 | `apple-touch-icon.png`, `favicon.ico` | Derived from the transparent mark | All pages |
 

@@ -322,6 +322,9 @@ a:hover{color:var(--green-dark)}
 }
 .split-media img{border-radius:var(--radius);box-shadow:var(--shadow)}
 .figure{margin:0}
+/* A supplied logo, not a photograph. Held to its own pixel width so it is
+   never upscaled to fill a column, and centred in whatever space is left. */
+.logo-art{max-width:min(100%,480px);margin-inline:auto}
 .figure figcaption{font-size:.92rem;color:var(--muted);margin-top:.55rem;max-width:52ch}
 
 /* ---------- layout: document page with a side rail ----------
