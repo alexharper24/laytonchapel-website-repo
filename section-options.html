@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<meta name="supported-color-schemes" content="light">
+<title>Section options | Layton Chapel Baptist Church</title>
+<meta name="description" content="Working comparison page for section backgrounds and callout treatments. Not part of the site.">
+<meta name="robots" content="noindex"><!-- REVIEW BUILD ONLY. Delete this line on every page before launch. -->
+<link rel="icon" href="favicon.ico?v=2" sizes="any">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap">
+<link rel="stylesheet" href="style.css?v=11">
+<style>
+/* ==========================================================================
+   THROWAWAY COMPARISON PAGE. Delete section-options.html once a direction is
+   picked, along with this block. It is not linked from the site and is not in
+   sitemap.xml.
+
+   Everything below only overrides tokens and the two rules under discussion,
+   so each option is the real site CSS wearing different clothes.
+   ========================================================================== */
+
+.optbar{
+  background:var(--deep);color:#C1CFC7;padding:1.5rem 0;
+  position:sticky;top:0;z-index:80;border-bottom:1px solid rgba(255,255,255,.12);
+}
+.optbar h1{color:#fff;font-size:1.35rem;margin:0 0 .35rem}
+.optbar p{color:#C1CFC7;margin:0;font-size:.98rem;max-width:80ch}
+.optbar a{color:#8FD9B0}
+
+.optlabel{background:var(--ink);color:#fff;padding:.9rem 0}
+.optlabel .wrap{display:flex;flex-wrap:wrap;gap:.5rem 1.25rem;align-items:baseline}
+.optlabel .tag{
+  font-family:var(--display);font-weight:700;font-size:.72rem;letter-spacing:.15em;
+  text-transform:uppercase;background:var(--green-bright);color:#fff;padding:.25rem .6rem;
+}
+.optlabel h2{color:#fff;font-size:1.15rem;margin:0}
+.optlabel p{color:#B9C6BE;margin:0;font-size:.95rem;max-width:none}
+
+/* ---------- OPTION A: warm neutral ground ----------
+   The panels stop being green. Green is spent on type, the service strip and
+   the dark bands only, so it stops washing over everything. */
+.opt-a{
+  --offset:#F4F2EF;
+  --tint:#EAE6DF;
+}
+.opt-a .section-offset{border-block:1px solid #E4E0D9}
+.opt-a .section-tint{border-block:1px solid #DDD7CD}
+.opt-a .callout{border:1px solid var(--line);border-left:1px solid var(--line);padding:1.5rem 1.6rem}
+.opt-a .callout h3{color:var(--ink)}
+.opt-a .card-when{background:#EAE6DF;color:#6B5A3E}
+
+/* ---------- OPTION B: paper and rules ----------
+   No tinted fields at all. Sections are separated by a hairline and more air.
+   Callouts drop the box for the 3px green top rule already used by the core
+   values list, which is the one green device on the site nobody flagged. */
+.opt-b .section-offset,
+.opt-b .section-tint{background:var(--white);border-block:0;border-top:1px solid var(--line)}
+.opt-b .section{padding-block:clamp(3.5rem,6.5vw,5.5rem)}
+.opt-b .callout{
+  border:0;border-top:3px solid var(--green-bright);background:transparent;
+  box-shadow:none;padding:1.1rem 0 0;
+}
+.opt-b .callout h3{color:var(--ink)}
+.opt-b .card{border-color:#E2E9E4}
+.opt-b .card-when{background:transparent;color:var(--green);padding-left:0}
+
+/* ---------- OPTION C: fewer, stronger ----------
+   White is the default and the band sections go properly dark instead of
+   pale. Colour becomes punctuation rather than a wash. */
+.opt-c .callout{border:1px solid var(--line);border-left:1px solid var(--line);padding:1.5rem 1.6rem}
+.opt-c .callout h3{color:var(--ink)}
+.opt-c .section-deep .callout{background:var(--deep-soft);border-color:#33473B}
+.opt-c .section-deep .callout h3{color:#fff}
+</style>
+</head>
+<body>
+
+<div class="optbar">
+  <div class="wrap">
+    <h1>Section grounds and callouts: four ways</h1>
+    <p>Same content, same stylesheet, four treatments of the two things that read cheap: the pale green panels and the green bar down the left of every callout. Scroll and pick one, or mix (for example option A's panels with option B's callouts). This page gets deleted once a direction is chosen. <a href="index.html">Back to the site</a></p>
+  </div>
+</div>
+
+<!-- ============================================================ CURRENT -->
+<div class="optlabel">
+  <div class="wrap">
+    <span class="tag">Now</span>
+    <h2>What is on the site today</h2>
+    <p>Pale green panels, green bar on every callout.</p>
+  </div>
+</div>
+<div class="opt-now">
+  <section class="section section-offset">
+    <div class="wrap">
+      <div class="section-head section-head-center">
+        <p class="eyebrow">Ministries</p>
+        <h2>Something here for every age</h2>
+        <p>From the nursery to our senior adults, there is a place to learn, grow and serve.</p>
+      </div>
+      <div class="cards">
+        <article class="card">
+          <p class="card-when">Sundays 9:45 AM</p>
+          <h3>Sunday School</h3>
+          <p>Classes for every age, from newborns all the way up to senior adults, every Sunday morning before worship.</p>
+          <a class="card-link" href="#">Sunday School</a>
+        </article>
+        <article class="card">
+          <p class="card-when">Sundays 11:00 AM</p>
+          <h3>Nursery and Children</h3>
+          <p>Childcare for infants and toddlers during the morning service, and Children's Church for ages 4 through 2nd grade.</p>
+          <a class="card-link" href="#">Children's ministries</a>
+        </article>
+        <article class="card">
+          <p class="card-when">Wednesdays 6:00 PM</p>
+          <h3>AWANA</h3>
+          <p>Clubs for ages 3 through high school, September to May, alongside adult Bible study.</p>
+          <a class="card-link" href="#">About AWANA</a>
+        </article>
+      </div>
+    </div>
+  </section>
+  <section class="section">
+    <div class="wrap split">
+      <div class="split-head">
+        <p class="eyebrow">Plan a visit</p>
+        <h2>What to expect on a Sunday</h2>
+      </div>
+      <div>
+        <dl class="ledger">
+          <div class="ledger-row"><dt>Getting here</dt><dd><p>1230 Anderson Creek School Rd. Parking is in the lot directly in front of the building.</p></dd></div>
+          <div class="ledger-row"><dt>Morning worship</dt><dd><p>11:00 AM. We sing from the hymnal and the preaching is from the King James Bible.</p></dd></div>
+        </dl>
+      </div>
+      <div>
+        <div class="callout">
+          <h3>Never been to a church like this?</h3>
+          <p>That is fine. Come as you are and sit wherever you like.</p>
+        </div>
+        <div class="callout">
+          <h3>Where we are</h3>
+          <p>On Anderson Creek School Road, between Spring Lake and Bunnlevel.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============================================================ OPTION A -->
+<div class="optlabel">
+  <div class="wrap">
+    <span class="tag">Option A</span>
+    <h2>Warm neutral ground</h2>
+    <p>Panels stop being green. Green is spent on type and the strip only.</p>
+  </div>
+</div>
+<div class="opt-a">
+  <section class="section section-offset">
+    <div class="wrap">
+      <div class="section-head section-head-center">
+        <p class="eyebrow">Ministries</p>
+        <h2>Something here for every age</h2>
+        <p>From the nursery to our senior adults, there is a place to learn, grow and serve.</p>
+      </div>
+      <div class="cards">
+        <article class="card">
+          <p class="card-when">Sundays 9:45 AM</p>
+          <h3>Sunday School</h3>
+          <p>Classes for every age, from newborns all the way up to senior adults, every Sunday morning before worship.</p>
+          <a class="card-link" href="#">Sunday School</a>
+        </article>
+        <article class="card">
+          <p class="card-when">Sundays 11:00 AM</p>
+          <h3>Nursery and Children</h3>
+          <p>Childcare for infants and toddlers during the morning service, and Children's Church for ages 4 through 2nd grade.</p>
+          <a class="card-link" href="#">Children's ministries</a>
+        </article>
+        <article class="card">
+          <p class="card-when">Wednesdays 6:00 PM</p>
+          <h3>AWANA</h3>
+          <p>Clubs for ages 3 through high school, September to May, alongside adult Bible study.</p>
+          <a class="card-link" href="#">About AWANA</a>
+        </article>
+      </div>
+    </div>
+  </section>
+  <section class="section">
+    <div class="wrap split">
+      <div class="split-head">
+        <p class="eyebrow">Plan a visit</p>
+        <h2>What to expect on a Sunday</h2>
+      </div>
+      <div>
+        <dl class="ledger">
+          <div class="ledger-row"><dt>Getting here</dt><dd><p>1230 Anderson Creek School Rd. Parking is in the lot directly in front of the building.</p></dd></div>
+          <div class="ledger-row"><dt>Morning worship</dt><dd><p>11:00 AM. We sing from the hymnal and the preaching is from the King James Bible.</p></dd></div>
+        </dl>
+      </div>
+      <div>
+        <div class="callout">
+          <h3>Never been to a church like this?</h3>
+          <p>That is fine. Come as you are and sit wherever you like.</p>
+        </div>
+        <div class="callout">
+          <h3>Where we are</h3>
+          <p>On Anderson Creek School Road, between Spring Lake and Bunnlevel.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============================================================ OPTION B -->
+<div class="optlabel">
+  <div class="wrap">
+    <span class="tag">Option B</span>
+    <h2>Paper and rules</h2>
+    <p>No tinted panels anywhere. Hairlines and space do the separating, and callouts take the green top rule already used by the core values.</p>
+  </div>
+</div>
+<div class="opt-b">
+  <section class="section section-offset">
+    <div class="wrap">
+      <div class="section-head section-head-center">
+        <p class="eyebrow">Ministries</p>
+        <h2>Something here for every age</h2>
+        <p>From the nursery to our senior adults, there is a place to learn, grow and serve.</p>
+      </div>
+      <div class="cards">
+        <article class="card">
+          <p class="card-when">Sundays 9:45 AM</p>
+          <h3>Sunday School</h3>
+          <p>Classes for every age, from newborns all the way up to senior adults, every Sunday morning before worship.</p>
+          <a class="card-link" href="#">Sunday School</a>
+        </article>
+        <article class="card">
+          <p class="card-when">Sundays 11:00 AM</p>
+          <h3>Nursery and Children</h3>
+          <p>Childcare for infants and toddlers during the morning service, and Children's Church for ages 4 through 2nd grade.</p>
+          <a class="card-link" href="#">Children's ministries</a>
+        </article>
+        <article class="card">
+          <p class="card-when">Wednesdays 6:00 PM</p>
+          <h3>AWANA</h3>
+          <p>Clubs for ages 3 through high school, September to May, alongside adult Bible study.</p>
+          <a class="card-link" href="#">About AWANA</a>
+        </article>
+      </div>
+    </div>
+  </section>
+  <section class="section">
+    <div class="wrap split">
+      <div class="split-head">
+        <p class="eyebrow">Plan a visit</p>
+        <h2>What to expect on a Sunday</h2>
+      </div>
+      <div>
+        <dl class="ledger">
+          <div class="ledger-row"><dt>Getting here</dt><dd><p>1230 Anderson Creek School Rd. Parking is in the lot directly in front of the building.</p></dd></div>
+          <div class="ledger-row"><dt>Morning worship</dt><dd><p>11:00 AM. We sing from the hymnal and the preaching is from the King James Bible.</p></dd></div>
+        </dl>
+      </div>
+      <div>
+        <div class="callout">
+          <h3>Never been to a church like this?</h3>
+          <p>That is fine. Come as you are and sit wherever you like.</p>
+        </div>
+        <div class="callout">
+          <h3>Where we are</h3>
+          <p>On Anderson Creek School Road, between Spring Lake and Bunnlevel.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============================================================ OPTION C -->
+<div class="optlabel">
+  <div class="wrap">
+    <span class="tag">Option C</span>
+    <h2>Fewer, stronger</h2>
+    <p>White is the default and the band sections go properly dark instead of pale. Colour as punctuation rather than a wash.</p>
+  </div>
+</div>
+<div class="opt-c">
+  <section class="section section-deep">
+    <div class="wrap">
+      <div class="section-head section-head-center">
+        <p class="eyebrow">Ministries</p>
+        <h2>Something here for every age</h2>
+        <p>From the nursery to our senior adults, there is a place to learn, grow and serve.</p>
+      </div>
+      <div class="cards">
+        <article class="card">
+          <p class="card-when">Sundays 9:45 AM</p>
+          <h3>Sunday School</h3>
+          <p>Classes for every age, from newborns all the way up to senior adults, every Sunday morning before worship.</p>
+          <a class="card-link" href="#">Sunday School</a>
+        </article>
+        <article class="card">
+          <p class="card-when">Sundays 11:00 AM</p>
+          <h3>Nursery and Children</h3>
+          <p>Childcare for infants and toddlers during the morning service, and Children's Church for ages 4 through 2nd grade.</p>
+          <a class="card-link" href="#">Children's ministries</a>
+        </article>
+        <article class="card">
+          <p class="card-when">Wednesdays 6:00 PM</p>
+          <h3>AWANA</h3>
+          <p>Clubs for ages 3 through high school, September to May, alongside adult Bible study.</p>
+          <a class="card-link" href="#">About AWANA</a>
+        </article>
+      </div>
+    </div>
+  </section>
+  <section class="section">
+    <div class="wrap split">
+      <div class="split-head">
+        <p class="eyebrow">Plan a visit</p>
+        <h2>What to expect on a Sunday</h2>
+      </div>
+      <div>
+        <dl class="ledger">
+          <div class="ledger-row"><dt>Getting here</dt><dd><p>1230 Anderson Creek School Rd. Parking is in the lot directly in front of the building.</p></dd></div>
+          <div class="ledger-row"><dt>Morning worship</dt><dd><p>11:00 AM. We sing from the hymnal and the preaching is from the King James Bible.</p></dd></div>
+        </dl>
+      </div>
+      <div>
+        <div class="callout">
+          <h3>Never been to a church like this?</h3>
+          <p>That is fine. Come as you are and sit wherever you like.</p>
+        </div>
+        <div class="callout">
+          <h3>Where we are</h3>
+          <p>On Anderson Creek School Road, between Spring Lake and Bunnlevel.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="optbar" style="position:static">
+  <div class="wrap">
+    <h1>Mixing is fine</h1>
+    <p>The panels and the callouts are separate decisions. Option A's warm panels with option B's top-rule callouts is a real combination, and probably the safest one. Tell me which of each and I will apply it across all ten pages and delete this page.</p>
+  </div>
+</div>
+
+</body>
+</html>

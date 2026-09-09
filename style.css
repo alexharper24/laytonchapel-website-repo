@@ -294,6 +294,17 @@ a:hover{color:var(--green-dark)}
 .section-deep .eyebrow{color:var(--gold-light)}
 .section-deep a{color:#8FD9B0}
 .section-deep a:hover{color:#B6E9CD}
+/* A card brings its own white surface, so the dark band's text colours have to
+   stop at its edge. The rules above are descendant selectors, and without this
+   a card dropped into a dark section renders a white heading on a white card
+   and light grey body text under it. No page does that today; this is here so
+   the next one that tries does not ship broken. */
+.section-deep .card{color:var(--body)}
+.section-deep .card h2,.section-deep .card h3,.section-deep .card h4{color:var(--ink)}
+.section-deep .card p,.section-deep .card li{color:var(--body)}
+.section-deep .card a{color:var(--green)}
+.section-deep .card a:hover{color:var(--green-dark)}
+.section-deep .card .card-when{color:var(--green)}
 
 .section-head{margin-bottom:2.1rem}
 .section-head p{color:var(--body);font-size:1.1rem}
@@ -323,8 +334,11 @@ a:hover{color:var(--green-dark)}
 .split-media img{border-radius:var(--radius);box-shadow:var(--shadow)}
 .figure{margin:0}
 /* A supplied logo, not a photograph. Held to its own pixel width so it is
-   never upscaled to fill a column, and centred in whatever space is left. */
-.logo-art{max-width:min(100%,480px);margin-inline:auto}
+   never upscaled to fill a column, and centred in whatever space is left.
+   678px is the source width: past that a flat logo with hard edges goes
+   soft and its JPEG artifacts magnify, so a bigger one needs a bigger file
+   rather than a bigger max-width. */
+.logo-art{max-width:min(100%,678px);margin-inline:auto}
 .figure figcaption{font-size:.92rem;color:var(--muted);margin-top:.55rem;max-width:52ch}
 
 /* ---------- layout: document page with a side rail ----------
