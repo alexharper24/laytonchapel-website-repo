@@ -43,6 +43,9 @@
   --display:"Quicksand",'Trebuchet MS',system-ui,sans-serif;
   --sans:"Source Sans 3",'Segoe UI',system-ui,-apple-system,sans-serif;
 
+  /* Also the offset the full-screen mobile menu starts at, so the two can
+     never drift apart. */
+  --header-h:80px;
   --maxw:1560px;
   --maxw-doc:1140px;
   --prose:68ch;
@@ -142,6 +145,13 @@ a:hover{color:var(--green-dark)}
 .btn-give:hover{background:var(--green);color:var(--white)}
 .btn-row{display:flex;flex-wrap:wrap;gap:.7rem;margin:0 0 1.05rem;max-width:none}
 .center-row{justify-content:center;margin-bottom:0}
+/* On a phone a button row is centred, and a row holding a single button gives
+   that button the full width. :only-child ignores whitespace text nodes, so
+   this needs no :has() and works everywhere. */
+@media (max-width:620px){
+  .btn-row{justify-content:center}
+  .btn-row > .btn:only-child{width:100%}
+}
 
 /* ---------- live service indicator ----------
    Same behaviour as hope-website-repo: any .watch-online link becomes a
@@ -164,7 +174,7 @@ a:hover{color:var(--green-dark)}
   border-bottom:1px solid var(--line);
   position:sticky;top:0;z-index:60;
 }
-.header-inner{display:flex;align-items:center;gap:1rem;min-height:80px}
+.header-inner{display:flex;align-items:center;gap:1rem;min-height:var(--header-h)}
 
 .brand{display:flex;align-items:center;gap:.65rem;text-decoration:none;padding:.35rem 0;margin-right:auto}
 .brand-mark{width:46px;height:46px;flex:0 0 auto}
@@ -207,19 +217,36 @@ a:hover{color:var(--green-dark)}
 
 @media (max-width:1150px){
   .nav-toggle{display:block}
+  /* Full screen, not a dropdown. position:fixed rather than absolute, starting
+     directly below the sticky header, so the menu owns the viewport and the
+     page behind it cannot be seen through the gaps. */
   .site-nav{
-    position:absolute;left:0;right:0;top:100%;
-    background:var(--white);border-bottom:1px solid var(--line);
-    box-shadow:var(--shadow-lg);
+    position:fixed;left:0;right:0;top:var(--header-h);bottom:0;
+    background:var(--white);
+    overflow-y:auto;overscroll-behavior:contain;
     display:none;
   }
   .site-nav.open{display:block}
-  .site-nav ul{flex-direction:column;align-items:stretch;gap:0;width:min(94%,var(--maxw));margin-inline:auto;padding:.5rem 0 1.1rem}
-  .site-nav a{min-height:52px;padding:.75rem .25rem;border-bottom:1px solid var(--line-soft);border-radius:0;font-size:1.05rem}
-  .site-nav a[aria-current="page"]{box-shadow:inset 3px 0 0 var(--green-bright);padding-left:.75rem}
-  .site-nav .nav-cta,.site-nav .nav-cta:first-of-type{margin:.85rem .25rem 0}
-  .site-nav .nav-cta a{justify-content:center;border-bottom:0;min-height:48px}
+  .site-nav ul{
+    flex-direction:column;align-items:stretch;gap:0;
+    width:min(94%,var(--maxw));margin-inline:auto;padding:.75rem 0 2rem;
+  }
+  /* The divider goes on the plain nav links only. Putting border-bottom:0 on
+     the CTA buttons to cancel it also cancelled the outline button's own
+     border, which is why Watch Online had green on three sides. */
+  .site-nav li:not(.nav-cta) a{
+    min-height:52px;padding:.75rem .25rem;font-size:1.05rem;
+    border-bottom:1px solid var(--line-soft);
+  }
+  .site-nav li:not(.nav-cta) a[aria-current="page"]{
+    box-shadow:inset 3px 0 0 var(--green-bright);padding-left:.75rem;
+  }
+  .site-nav .nav-cta,.site-nav .nav-cta:first-of-type{margin:1rem .25rem 0}
+  .site-nav .nav-cta a{justify-content:center;min-height:52px}
 }
+/* The menu covers the screen, so the page behind it must not scroll under it.
+   main.js puts this class on <html> while the menu is open. */
+.nav-open,.nav-open body{overflow:hidden}
 
 /* ---------- hero ---------- */
 
@@ -280,6 +307,11 @@ a:hover{color:var(--green-dark)}
     border-right:0;border-bottom:1px solid rgba(255,255,255,.18);
   }
   .strip-cell:last-child{border-bottom:0}
+  /* The address is the only tap target in the strip. Padding alone left it a
+     few pixels under 44 whenever the text happened to fit on one line, so the
+     height is asserted instead of computed from the line box. inline-flex
+     keeps the text wrappable. */
+  .strip-cell a{display:inline-flex;align-items:center;min-height:44px;padding-block:.35rem}
 }
 
 /* ---------- sections ---------- */

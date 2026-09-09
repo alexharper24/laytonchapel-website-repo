@@ -14,24 +14,34 @@
   var nav = document.getElementById('site-nav');
 
   if (toggle && nav) {
-    toggle.addEventListener('click', function () {
-      var open = nav.classList.toggle('open');
+    // The mobile menu covers the whole screen, so the page behind it must not
+    // scroll under it. The class on <html> is what stops that; style.css owns
+    // the overflow rule.
+    function setNav(open) {
+      nav.classList.toggle('open', open);
       toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      document.documentElement.classList.toggle('nav-open', open);
+    }
+
+    toggle.addEventListener('click', function () {
+      setNav(!nav.classList.contains('open'));
     });
 
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && nav.classList.contains('open')) {
-        nav.classList.remove('open');
-        toggle.setAttribute('aria-expanded', 'false');
+        setNav(false);
         toggle.focus();
       }
     });
 
     nav.addEventListener('click', function (e) {
-      if (e.target.closest('a')) {
-        nav.classList.remove('open');
-        toggle.setAttribute('aria-expanded', 'false');
-      }
+      if (e.target.closest('a')) { setNav(false); }
+    });
+
+    // Coming back to a wide window with the menu still open would otherwise
+    // leave <html> locked and the page unscrollable.
+    window.addEventListener('resize', function () {
+      if (window.innerWidth > 1150 && nav.classList.contains('open')) { setNav(false); }
     });
   }
 
