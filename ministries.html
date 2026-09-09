@@ -167,12 +167,15 @@
 
   <section class="section" id="awana">
     <div class="wrap split split-even">
-      <div class="split-head">
+      <!-- No .split-head here on purpose. That class spans a heading across
+           both columns, which is right when both hold content but wrong here:
+           the right column is a single image, and a spanning heading pushes the
+           whole content row down so the image can never centre against the
+           heading above it. The heading belongs in the left column instead. -->
+      <div class="prose">
         <p class="eyebrow">Wednesdays, 6:00 to 7:30 PM</p>
         <h2>AWANA clubs</h2>
-        <p>The largest of our children's ministries, and the one with its own registration.</p>
-      </div>
-      <div>
+        <p class="lead">The largest of our children's ministries, and the one with its own registration.</p>
         <p>AWANA meets every Wednesday from 6:00 to 7:30 PM, September to May, with clubs from age 3 right through high school. It gives children a dynamic approach to learning God's Word, and it runs at the same time as adult Bible study.</p>
         <dl class="ledger ledger-tight">
           <div class="ledger-row"><dt>Puggles</dt><dd><p>Two and three year olds</p></dd></div>
