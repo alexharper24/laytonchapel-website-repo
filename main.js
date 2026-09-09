@@ -14,13 +14,21 @@
   var nav = document.getElementById('site-nav');
 
   if (toggle && nav) {
-    // The mobile menu covers the whole screen, so the page behind it must not
-    // scroll under it. The class on <html> is what stops that; style.css owns
-    // the overflow rule.
+    // The mobile menu covers the whole screen. The page behind it is marked
+    // inert rather than having its scrolling locked: `inert` takes it out of
+    // the tab order and stops it receiving taps, which is what was actually
+    // wanted, without the overflow:hidden that used to break the sticky
+    // header. See the note by .nav-open in style.css before changing this.
+    var behind = [document.getElementById('main'), document.querySelector('.site-footer')]
+      .filter(Boolean);
+
     function setNav(open) {
       nav.classList.toggle('open', open);
       toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
       document.documentElement.classList.toggle('nav-open', open);
+      behind.forEach(function (el) {
+        if (open) { el.setAttribute('inert', ''); } else { el.removeAttribute('inert'); }
+      });
     }
 
     toggle.addEventListener('click', function () {

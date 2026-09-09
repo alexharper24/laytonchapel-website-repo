@@ -221,7 +221,9 @@ a:hover{color:var(--green-dark)}
      directly below the sticky header, so the menu owns the viewport and the
      page behind it cannot be seen through the gaps. */
   .site-nav{
-    position:fixed;left:0;right:0;top:var(--header-h);bottom:0;
+    /* +1px for the header's bottom border, which --header-h does not
+       include. Without it the menu sits a pixel over the rule. */
+    position:fixed;left:0;right:0;top:calc(var(--header-h) + 1px);bottom:0;
     background:var(--white);
     overflow-y:auto;overscroll-behavior:contain;
     display:none;
@@ -244,9 +246,19 @@ a:hover{color:var(--green-dark)}
   .site-nav .nav-cta,.site-nav .nav-cta:first-of-type{margin:1rem .25rem 0}
   .site-nav .nav-cta a{justify-content:center;min-height:52px}
 }
-/* The menu covers the screen, so the page behind it must not scroll under it.
-   main.js puts this class on <html> while the menu is open. */
-.nav-open,.nav-open body{overflow:hidden}
+/* No overflow lock on the root. It looks like the obvious way to stop the
+   page scrolling behind a full screen menu, and it breaks the sticky
+   header: position:sticky needs a scrolling ancestor, and overflow:hidden
+   on the root removes it, so the header drops to its static position at
+   the top of the document and disappears off screen whenever the menu is
+   opened while scrolled. It also removes the scrollbar at tablet widths,
+   which shifts the page 15px, and on iOS it does not reliably stop touch
+   scrolling.
+
+   The overlay covers the viewport and contains its own overscroll instead,
+   and main.js marks the page behind it inert so taps and Tab cannot reach
+   it. Do not put the lock back. */
+.nav-open .site-header{touch-action:none}
 
 /* ---------- hero ---------- */
 
