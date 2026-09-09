@@ -335,10 +335,16 @@ a:hover{color:var(--green-dark)}
 .figure{margin:0}
 /* A supplied logo, not a photograph. Held to its own pixel width so it is
    never upscaled to fill a column, and centred in whatever space is left.
-   678px is the source width: past that a flat logo with hard edges goes
-   soft and its JPEG artifacts magnify, so a bigger one needs a bigger file
-   rather than a bigger max-width. */
-.logo-art{max-width:min(100%,678px);margin-inline:auto}
+   The asset is 1356px wide, so 840 is a downscale and stays crisp. It was
+   upscaled 2x from a 678px source with LANCZOS plus a light unsharp, which
+   flat colour artwork takes well; a photograph would not.
+
+   On the current AWANA layout the 840 never actually binds: .wrap caps at
+   1560px, so a split-even column tops out at 758px and that is what governs.
+   The headroom is here so a wider slot does not need another edit. To make
+   the logo bigger than 758 the column has to get more of the row, not the
+   image a bigger max-width. */
+.logo-art{max-width:min(100%,840px);margin-inline:auto}
 .figure figcaption{font-size:.92rem;color:var(--muted);margin-top:.55rem;max-width:52ch}
 
 /* ---------- layout: document page with a side rail ----------
