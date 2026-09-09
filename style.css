@@ -331,6 +331,12 @@ a:hover{color:var(--green-dark)}
      .split-head, which then lands underneath the media instead of above
      both columns. Put the media div first in the markup instead. */
 }
+/* .split aligns items to the top, which is correct for two columns of copy.
+   A lone image is the exception: it is shorter than a column of text at most
+   widths, so a top edge leaves all the slack dumped below it. Put this on the
+   image's own grid item to centre it against the taller column instead. It
+   also does the right thing when the image is the taller of the two. */
+.split > .self-center{align-self:center}
 .split-media img{border-radius:var(--radius);box-shadow:var(--shadow)}
 .figure{margin:0}
 /* A supplied logo, not a photograph. Held to its own pixel width so it is
