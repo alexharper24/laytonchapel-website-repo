@@ -238,6 +238,19 @@ Tokens are at the top of `style.css`.
   used a bare `<div>`, which made the entire navigation unreachable by keyboard and
   screen reader at phone width.
 - Tap targets are 44px minimum throughout.
+- **The footer toggles are built by `main.js`, not written into the pages.** Below
+  500px the Service times, Explore and Follow along columns fold behind their
+  headings as one list of 48px rows, which took the footer from 1038px to 485px
+  at 390px wide, from 1.23 screens to 0.57. The 500px edge is where the footer
+  grid stops being a single column, which is the only width the fold helps. The pages carry only `class="footer-col"` on those three
+  `<div>`s; the button, its chevron and the panel wrapper are created at run time
+  from the `<h3>` and `<ul>` already there. Two consequences worth keeping: the
+  heading text exists once, so renaming a column cannot leave the phone and the
+  desktop disagreeing, and a footer whose script never loaded keeps plain headings
+  with every list open. Do not move the toggle markup into the HTML.
+- **The address and phone number never fold.** They are what somebody scrolls to a
+  church footer for, and they are three lines rather than a list. To fold another
+  column, add `class="footer-col"` to it.
 
 ---
 

@@ -301,6 +301,80 @@
     });
   })();
 
+  /* ---------- footer columns on a phone ----------
+     The footer ran 1038px tall at 390px wide, which is more than a screenful
+     of links below the address. The three columns carrying class="footer-col"
+     fold behind their own headings below 500px, where the footer grid stops
+     being a single column. It is 485px folded.
+
+     The address and the phone number never fold: they are what somebody
+     scrolls to a church footer for, and they are three lines rather than a
+     list. To fold another column, add class="footer-col" to it in the ten
+     pages. See style.css for why the breakpoint is 499px and not the 620px
+     used elsewhere.
+
+     The toggle button and the panel wrapper are BUILT HERE rather than
+     written into the markup, for two reasons. The heading text is then
+     written once: a button with its own copy of the label would silently
+     disagree with the desktop heading the first time somebody renamed a
+     column in ten pages. And a footer whose script never loaded keeps plain
+     headings with every list open, because the elements that do the folding
+     simply never come into being. Hiding links behind a control that cannot
+     open them is the one failure this pattern must not have.
+
+     The list is moved into the panel, not copied. The live service code above
+     has already bound the .watch-online link in this footer, and moving a
+     node keeps its listeners while cloning would quietly drop them. */
+  var footerCols = document.querySelectorAll('.footer-col');
+  var siteFooter = document.querySelector('.site-footer');
+
+  if (footerCols.length && siteFooter) {
+    var CHEVRON = '<svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"' +
+      ' focusable="false"><path d="M2 4.5L6 8.5L10 4.5" fill="none" stroke="currentColor"' +
+      ' stroke-width="1.8" stroke-linecap="square"></path></svg>';
+
+    Array.prototype.forEach.call(footerCols, function (col) {
+      var heading = col.querySelector('h3');
+      var list = col.querySelector('ul');
+      if (!heading || !list) { return; }
+
+      var label = heading.textContent.trim();
+      var id = 'footer-' + label.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+
+      var panel = document.createElement('div');
+      panel.className = 'footer-col-panel';
+      panel.id = id;
+      var clip = document.createElement('div');
+      clip.appendChild(list);
+      panel.appendChild(clip);
+      col.appendChild(panel);
+
+      var button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'footer-col-toggle';
+      button.setAttribute('aria-expanded', 'false');
+      button.setAttribute('aria-controls', id);
+      button.appendChild(document.createTextNode(label));
+      button.insertAdjacentHTML('beforeend', CHEVRON);
+
+      // the heading keeps a plain label for desktop, where the button is hidden
+      var text = document.createElement('span');
+      text.className = 'footer-col-label';
+      text.textContent = label;
+      heading.textContent = '';
+      heading.appendChild(text);
+      heading.appendChild(button);
+
+      button.addEventListener('click', function () {
+        var open = !col.classList.contains('open');
+        col.classList.toggle('open', open);
+        button.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+    });
+
+    siteFooter.classList.add('footer-accordion-ready');
+  }
+
   /* ---------- popout links ----------
      Giving hands off to an outside payment provider. Open it in its own window
      so the visitor keeps the church's site behind them, and fall back to a

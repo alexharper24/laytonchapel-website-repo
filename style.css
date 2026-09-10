@@ -627,6 +627,81 @@ a:hover{color:var(--green-dark)}
 }
 .footer-bottom p{margin:0;font-size:.9rem;color:#93A399;max-width:none}
 
+/* ---------- footer columns fold on a phone ----------
+   Measured at 390px wide before this change, the footer ran 1038px tall:
+   more than a whole screen of links sitting under the address. The three
+   columns carrying .footer-col fold behind their own headings below 500px,
+   as one continuous list of 48px rows.
+
+   499px is derived, not chosen to match the other breakpoints in this file.
+   .footer-grid is auto-fit minmax(215px,1fr) with a 2.5rem column gap, so two
+   columns fit from 470px of grid width, and .wrap is 94% of the viewport: two
+   columns from a 500px viewport up. The fold is scoped to exactly the widths
+   where the footer is ONE column, because that is the only place it helps. At
+   two columns a folded row shares its grid row with the 171px address block
+   and its rule ends up floating 147px above the next one, which reads as a
+   stray bar. Two open columns are also shorter there than three folded rows in
+   one: 357px against 453px, measured at 600px.
+
+   Service times, Explore and Follow along all fold. The address and the phone
+   number never do: they are the two things somebody scrolls to a church footer
+   for, and they are three lines rather than a list. Service times fold here at
+   Alex's direction even though the homepage keeps them one glance away in the
+   service strip, which is the reason Visit is an anchor and not a page. To
+   fold another column, add class="footer-col" to it in the ten pages.
+
+   Everything below is scoped to .footer-accordion-ready, a class main.js
+   adds at run time rather than one written into the ten pages. A footer
+   whose script never loaded therefore renders exactly as it does today:
+   every list open, every toggle hidden. Hiding links behind a control that
+   cannot open them is the one failure this pattern must not have.
+
+   The toggle and the panel are built by main.js from the h3 and the ul that
+   are already in the markup, so the label is written once. The ten pages only
+   carry class="footer-col" to say which columns fold. */
+.footer-col-toggle{display:none}
+
+@media (max-width:499px){
+  /* No row gap: each folded row carries its own top rule, so a gap would put
+     dead space above every rule and read as three floating bars rather than
+     one list. The address block keeps its own margin instead, since it is the
+     only child that is not a folded row. */
+  .footer-accordion-ready .footer-grid{row-gap:0}
+  .footer-accordion-ready .footer-grid > div:not(.footer-col){margin-bottom:1.5rem}
+  .footer-accordion-ready .footer-col h3{margin:0}
+  .footer-accordion-ready .footer-col-label{display:none}
+  /* .footer-bottom already carries a 1px top rule. Closing the list with a
+     border-bottom of its own put two identical rules 36px apart with nothing
+     between them, which read as an empty fourth row. Its own rule closes the
+     list instead, pulled up tight against the last one. */
+  .footer-accordion-ready .footer-bottom{margin-top:0}
+  .footer-accordion-ready .footer-col-toggle{
+    display:flex;align-items:center;justify-content:space-between;gap:1rem;
+    width:100%;min-height:48px;padding:.7rem 0;
+    background:none;border:0;border-top:1px solid rgba(255,255,255,.13);
+    font:inherit;color:#7FC79E;text-align:left;cursor:pointer;
+  }
+  /* the shared ring sits 2px outside, which would clip on a full width row */
+  .footer-accordion-ready .footer-col-toggle:focus-visible{outline-offset:-3px}
+  .footer-accordion-ready .footer-col-toggle svg{flex:0 0 auto;transition:transform .3s ease}
+  .footer-accordion-ready .footer-col-toggle[aria-expanded="true"] svg{transform:rotate(180deg)}
+  /* 0fr to 1fr animates in current browsers and simply snaps in older ones,
+     so the fold works either way. The inner div carries the clipping. */
+  .footer-accordion-ready .footer-col-panel{
+    display:grid;grid-template-rows:0fr;transition:grid-template-rows .3s ease;
+  }
+  /* visibility is what actually removes the closed links from the tab order
+     and from taps. A clipped zero height panel still holds focusable links
+     without it, and it has to be stepped or it would fade. */
+  .footer-accordion-ready .footer-col-panel > div{
+    overflow:hidden;min-height:0;visibility:hidden;transition:visibility .3s step-end;
+  }
+  .footer-accordion-ready .footer-col.open .footer-col-panel{grid-template-rows:1fr}
+  .footer-accordion-ready .footer-col.open .footer-col-panel > div{visibility:visible;transition:visibility 0s}
+  /* breathing room lives on the last link, so a closed panel is a true zero */
+  .footer-accordion-ready .footer-col-panel li:last-child{margin-bottom:0;padding-bottom:1rem}
+}
+
 .skip-link{
   position:absolute;left:-9999px;top:0;z-index:200;
   background:var(--green);color:var(--white);padding:.75rem 1.25rem;
@@ -697,6 +772,9 @@ a:hover{color:var(--green-dark)}
   .doc{display:block}
   .site-footer{background:#fff;color:#000;border-top:1pt solid #000;padding-top:1rem}
   .site-footer h3,.site-footer p,.site-footer li,.site-footer a{color:#000}
+  .footer-col-toggle{display:none!important}
+  .footer-col-label{display:inline!important}
+  .footer-col-panel,.footer-col-panel>div{display:block!important;visibility:visible!important}
   .card,.callout,.verse{border:1pt solid #999;box-shadow:none;background:#fff}
   a{color:#000;text-decoration:underline}
   main a[href^="http"]::after{content:" (" attr(href) ")";font-size:9pt;word-break:break-all}

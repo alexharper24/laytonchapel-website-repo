@@ -194,6 +194,37 @@ Tokens at the top of `style.css`.
   after a tap on iOS.
 - `[id]{scroll-margin-top:96px}`. The header is sticky at 81px, so without this
   every in-page anchor lands with its own heading hidden underneath it.
+- **The footer column toggles are constructed in `main.js`.** Below 500px the
+  Service times, Explore and Follow along columns fold, which took the footer
+  from 1038px to 485px at 390px wide. The pages carry only `class="footer-col"`;
+  `main.js`
+  builds the button, the chevron and the panel from the `<h3>` and `<ul>`
+  already in the markup, then adds `.footer-accordion-ready` to the footer,
+  which is what the collapsing CSS is scoped to. So the label is written once,
+  and a footer whose script never ran stays fully open with no toggles. Do not
+  hand-write the toggle markup into the ten pages, and do not scope the
+  collapsed CSS to anything the markup sets. The list is **moved** into the
+  panel rather than cloned, because the live service code has already bound
+  the `.watch-online` link inside it.
+- **The address and phone number never fold.** Service times DO fold, at Alex's
+  direction, even though the homepage keeps them one glance away in the service
+  strip. That homepage placement is the reason Visit is an anchor and not a page,
+  and it is why folding them in the footer costs nothing.
+- **Nothing closes the folded list but `.footer-bottom`'s own top rule.** Giving
+  the last column a border-bottom of its own put two identical 1px rules 36px
+  apart with nothing between them, which read on a phone as an empty fourth row.
+  `.footer-bottom` has `margin-top:0` at that width so its rule sits tight
+  against the last row.
+- **The fold stops at 499px, and that number is derived.** `.footer-grid` is
+  `auto-fit minmax(215px,1fr)`, so it has two columns from a 500px viewport up.
+  Above that a folded row shares its grid row with the 171px address block and
+  its rule floats 147px above the next one, reading as a stray bar; two open
+  columns are also shorter there (357px against 453px at 600px). Do not widen
+  it to match the 620px breakpoints elsewhere in the file.
+- **`row-gap` is 0 while folded** so each row's own top rule is the only
+  separator and the three read as one list. The address block carries its own
+  `margin-bottom` instead. Rows are 48px, which still clears the 44px tap
+  target floor this site holds to.
 
 ## Working on it
 
@@ -215,7 +246,7 @@ light-mode lock, em dashes in copy, dropped `@media` blocks, sitemap gaps and na
 drift.
 
 **Bump `?v=N` on `style.css` / `main.js` in the same commit that changes the file.**
-Currently `style.css?v=10`, `main.js?v=5`, favicon and touch icon at `?v=2`.
+Currently `style.css?v=21`, `main.js?v=8`, favicon and touch icon at `?v=2`.
 
 **Commit the files in `img/`.** HTML shipping without its images is the most common
 production bug across these repos.
